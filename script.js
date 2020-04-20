@@ -1,57 +1,27 @@
 //assign arrays
 
-var specChar = ['!', '?'];
-var lowerPass = ['a', 'b', 'c'];// "qwertyuiopasdfghjklzxcvbnm";
-var upperPass = ['A', 'B', 'C'];
-var numPass = ["1", "2"];
-
+var specChar = ['!', '?', '@', '#', "$", "<", ">", "&", "-"];
+var lowerPass = ['a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z'];
+var upperPass = ['A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z'];
+var numPass = ["1","2","3","4","5","6","7","8","9","0"];
 
 var lengthChoice;
 var passLength;
 
-// //<========Validaton Code==========>
-// var createPass = [];
-//  console.log(createPass);
-//  createPass.push(specChar);
-//  console.log(createPass);
-//  console.log(createPass[0]);
-//  createPass.push(lowerPass);
-//  console.log(createPass);
-//  console.log(createPass[1][0])
-
-//  for(var i=0;i<passLength;i++){
-//   if(i<createPass.length){
-//     createPass[i][Math.floor(math.random(createPass[i].length))]
-//   }
-//   else{
-//     createPass[Math.random(createPass.length-1)][Math.random(createPass[0].length-1)]
-//  }
-//  }
-
-//<========Validaton Code ends==========>
-
-
-// Function to prompt user for password options
-//function getPasswordOptions()
-
-//fx to prompt user for specific data
+//function to prompt user for specific data
 function generatePassword() {
 
   //prompt user here
   confirm("Would you like to generate a new password?")
   //create createpass array here / master array
   createPass = [];
-  //randomly select data from createpass to make your final pw
-
-
-
 
   lengthChoice = true;
 
   //conditional statement for pw length
   while (lengthChoice) {
     passLength = prompt("How many characters would you like your password to be? Select between 8 to 128 characters.");
-    if (passLength < 8 || passLength > 129 || isNaN(passLength)) {
+    if (passLength < 8 || passLength > 128 || isNaN(passLength)) {
       alert("Please enter a valid amount of characters.");
     } else {
       lengthChoice = false;
@@ -98,16 +68,26 @@ function generatePassword() {
     }
   }
 
-//<==============Not sure how to generate random password or validate==============>
-  var password = "";
+  var myPassword = "";
+  console.log(createPass);
+  var firstIndexArray;
   for(var i=0; i<passLength;i++){
-    // password = createPass[Math.floor(math.random(createPass.length-1))];
-    password = password + createPass[Math.floor(math.random() * (createPass.length-1))];
-    console.log(password)
+    //index location of the first array in createPass
+    //if i is less than the length of the createpass array (first array) - validation to grab at least one character of character options requested for
+    if(i < createPass.length){
+      firstIndexArray=i;
+    }
+    //Then pick random character choices for the rest
+    else{
+      firstIndexArray= Math.floor(Math.random() * ((createPass.length-1) - 0 + 1)) + 0;
+    }
+    
+    var valueInsideSecArr = createPass[firstIndexArray][Math.floor(Math.random() * ((createPass[firstIndexArray].length-1) - 0 + 1)) + 0];
+
+    myPassword += valueInsideSecArr
   }
 
-return password
-
+return myPassword;
 }
 
 // Assignment Code
@@ -117,9 +97,8 @@ var generateBtn = document.querySelector("#generate");
 function writePassword() {
   var password = generatePassword();
   var passwordText = document.querySelector("#password");
+  //displays code on screen
   passwordText.value = password;
 }
 // Add event listener to generate button
 generateBtn.addEventListener("click", writePassword);
-
-//Display new password
